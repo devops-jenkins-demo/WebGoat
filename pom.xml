@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.owasp.webgoat</groupId>
     <artifactId>webgoat-parent</artifactId>
@@ -144,7 +143,7 @@
         <junit.version>4.12</junit.version>
         <lombok.version>1.18.4</lombok.version>
         <mail-api.version>1.5.4</mail-api.version>
-        <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
+        <maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
         <maven-failsafe-plugin.version>2.22.0</maven-failsafe-plugin.version>
         <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
         <maven-jar-plugin.version>2.6</maven-jar-plugin.version>
@@ -160,11 +159,38 @@
     </properties>
 
     <modules>
-        <module>webgoat-container</module>
+  <module>webgoat-container</module>
         <module>webgoat-lessons</module>
         <module>webgoat-server</module>
-        <module>webwolf</module>
+
     </modules>
+	<reporting>
+	    <plugins>
+		<plugin>
+	          <groupId>org.apache.maven.plugins</groupId>
+	          <artifactId>maven-checkstyle-plugin</artifactId>
+	          <version>3.0.0</version>
+	          <reportSets>
+	            <reportSet>
+	              <reports>
+	                <report>checkstyle</report>
+	              </reports>
+	            </reportSet>
+	          </reportSets>
+	        </plugin>      
+	      <plugin>
+        		<groupId>com.github.spotbugs</groupId>
+        		<artifactId>spotbugs-maven-plugin</artifactId>
+        		<version>3.1.11</version>
+      		</plugin>
+		<plugin>
+		    <groupId>org.apache.maven.plugins</groupId>
+		    <artifactId>maven-jxr-plugin</artifactId>
+		    <version>2.3</version>
+		 </plugin>
+	    
+		</plugins>
+	  </reporting>
 
     <distributionManagement>
         <snapshotRepository>
@@ -210,8 +236,12 @@
             <artifactId>jaxb-api</artifactId>
             <version>2.3.0</version>
         </dependency>
-    </dependencies>
-
+	<dependency>
+    	    <groupId>com.github.spotbugs</groupId>
+    	    <artifactId>spotbugs</artifactId>
+    	    <version>3.1.12</version>
+	</dependency>    
+</dependencies>
     <build>
         <plugins>
             <plugin>
@@ -219,8 +249,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven-compiler-plugin.version}</version>
                 <configuration>
-                    <source>11</source>
-                    <target>11</target>
+                    <source>8</source>
+                    <target>8</target>
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
@@ -255,7 +285,12 @@
                     <!-- aggregated reports for multi-module projects -->
                     <aggregate>true</aggregate>
                 </configuration>
-            </plugin>
+	        </plugin>
+	        <plugin>
+		          <groupId>com.github.spotbugs</groupId>
+		          <artifactId>spotbugs-maven-plugin</artifactId>
+		          <version>3.1.11</version>
+	        </plugin>
         </plugins>
     </build>
 
